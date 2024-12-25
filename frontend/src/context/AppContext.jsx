@@ -33,11 +33,38 @@ export const AppContextProvider = ({ children }) => {
       toast.error(error.message);
     }
   };
-
   // When ever we load the page, we need to call the getDoctorsData function
   useEffect(() => {
     getDoctorsData();
   }, []);
+  // get user data
+  const [userData, setUserData] = useState(false);
+  const getUserProfile = async () => {
+    try {
+      await axios
+        .get(`${backendUrl}/user/get-profile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          setUserData(response.data.userData);
+          console.log(response.data.userData);
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+  };
+  useEffect(() => {
+    if (token) {
+      getUserProfile();
+    } else {
+      setUserData(false);
+    }
+  }, [token]);
 
   const state = {
     currencySymbol,
@@ -46,6 +73,9 @@ export const AppContextProvider = ({ children }) => {
     setToken,
     doctors,
     getDoctorsData,
+    userData,
+    setUserData,
+    getUserProfile,
   };
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>;
 };
