@@ -7,22 +7,26 @@ export const AppContext = createContext();
 
 // Provider component
 export const AppContextProvider = ({ children }) => {
+  // State variables for currency symbol
   const currencySymbol = "$";
-
+  // Backend API URL
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  // State variables for token
+  // const [token, setToken] = useState('');
   // When refresh the page, to fetch the token from local storage
   const [token, setToken] = useState(
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
   );
-  // Get all doctors
+  // State variables for doctors data
   const [doctors, setDoctors] = useState([]);
+  // Get all doctors
   const getDoctorsData = async () => {
     try {
       await axios
         .get(`${backendUrl}/doctor/list`)
         .then((response) => {
           setDoctors(response.data.doctors);
-          console.log(response.data.doctors);
+          // console.log(response.data.doctors);
         })
         .catch((error) => {
           console.log(error.response.data.message);
@@ -37,8 +41,9 @@ export const AppContextProvider = ({ children }) => {
   useEffect(() => {
     getDoctorsData();
   }, []);
-  // get user data
+  // State variables for user data
   const [userData, setUserData] = useState(false);
+  // get user data
   const getUserProfile = async () => {
     try {
       await axios
@@ -47,7 +52,7 @@ export const AppContextProvider = ({ children }) => {
         })
         .then((response) => {
           setUserData(response.data.userData);
-          console.log(response.data.userData);
+          // console.log(response.data.userData);
         })
         .catch((error) => {
           console.log(error.response.data.message);
@@ -58,6 +63,7 @@ export const AppContextProvider = ({ children }) => {
       toast.error(error.message);
     }
   };
+  // When ever we load the page, we need to call the getUserProfile function if user token is available
   useEffect(() => {
     if (token) {
       getUserProfile();
@@ -65,7 +71,7 @@ export const AppContextProvider = ({ children }) => {
       setUserData(false);
     }
   }, [token]);
-
+  // state
   const state = {
     currencySymbol,
     backendUrl,
@@ -77,5 +83,6 @@ export const AppContextProvider = ({ children }) => {
     setUserData,
     getUserProfile,
   };
+  
   return <AppContext.Provider value={state}>{children}</AppContext.Provider>;
 };
