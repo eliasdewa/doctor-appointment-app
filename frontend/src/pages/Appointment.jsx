@@ -61,7 +61,7 @@ const Appointment = () => {
           minute: "2-digit",
         });
 
-        // To make inactive the selected date and time
+        // To make inactive/remove the selected date and time
         let day = currentDate.getDate();
         let month = currentDate.getMonth() + 1;
         let year = currentDate.getFullYear();
