@@ -8,7 +8,7 @@ export const AppContext = createContext();
 // Provider component
 export const AppContextProvider = ({ children }) => {
   // State variables for currency symbol
-  const currencySymbol = "$";
+  const currencySymbol = "ETB";
   // Backend API URL
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // State variables for token

@@ -6,13 +6,14 @@ import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import doctorModel from "../models/doctors.model.js";
 import appointmentModel from "../models/appointment.model.js";
+import axios from 'axios';
 
 // Register a new user
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, phone } = req.body;
     // Check if required fields are provided
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !phone) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required!" });
@@ -43,6 +44,7 @@ const registerUser = async (req, res) => {
     // create a new user
     const userData = {
       name,
+      phone,
       email,
       password: hashedPassword,
     };
@@ -233,7 +235,6 @@ const getAppointments = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
-
 // To cancel the appointment
 const cancelAppointment = async (req, res) => {
   try {
@@ -268,12 +269,83 @@ const cancelAppointment = async (req, res) => {
     // return success response
     return res
       .status(200)
-      .json({ success: true, message: "Appointment cancelled successfully" });
+      .json({ success: true, message: "Appointment cancelled" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: error.message });
   }
 };
+// Chapa payment method
+const chapaPayment = async (req, res) => {
+  const { amount, email, firstName, lastName, phone, appointmentId } = req.body;
+
+  try {
+    const response = await axios.post(
+      "https://api.chapa.co/v1/transaction/initialize",
+      {
+        amount,
+        currency: "ETB",
+        email,
+        first_name: firstName,
+        last_name: lastName,
+        phone_number: phone,
+        callback_url: "http://localhost:5000/api/user/payment-callback", // Backend URL
+        return_url: "http://localhost:5173/my-appointments", // Frontend redirection URL
+        tx_ref: `tx-${appointmentId}-${Date.now()}` // Transaction reference with appointmentId
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.CHAPA_API_KEY}`,
+        },
+      }
+    );
+    // console.log("Chapa Payment Initialization Response:", response.data);
+
+    // Send the payment URL back to the frontend
+    res.status(200).json({ success: true, paymentUrl: response.data.data.checkout_url });
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+    res.status(500).json({ success: false, message: "Payment initialization failed" });
+  }
+};
+// Verify payment
+const verifyPayment = async (req, res) => {
+  // console.log("Request Query Params:", req.query);
+  const txRef = req.query.trx_ref; // Log the transaction reference
+  // console.log("Transaction Reference:", txRef);
+
+  if (!txRef) {
+    console.error("Transaction reference missing in callback");
+    return res.status(400).send("Transaction reference missing");
+  }
+
+  try {
+    const response = await axios.get(`https://api.chapa.co/v1/transaction/verify/${txRef}`, {
+      headers: {
+        Authorization: `Bearer ${process.env.CHAPA_API_KEY}`,
+      },
+    });
+
+    // console.log("Chapa Verification Response:", response.data);
+
+    if (response.data.status === "success") {
+      const appointmentId = txRef.split("-")[1];
+      // console.log("Appointment ID:", appointmentId);
+
+      await appointmentModel.findByIdAndUpdate(appointmentId, { payment: true });
+      // console.log("Payment status updated in database");
+
+      return res.redirect(`http://localhost:5173/my-appointments?payment=true`);
+    } else {
+      console.error("Payment verification failed:", response.data);
+      return res.redirect(`http://localhost:5173/my-appointments?payment=false`);
+    }
+  } catch (error) {
+    console.error("Error verifying transaction:", error.response?.data || error.message);
+    return res.redirect(`http://localhost:5173/my-appointments?payment=false`);
+  }
+};
+
 export {
   registerUser,
   loginUser,
@@ -282,4 +354,6 @@ export {
   bookAppointment,
   getAppointments,
   cancelAppointment,
+  chapaPayment,
+  verifyPayment
 };

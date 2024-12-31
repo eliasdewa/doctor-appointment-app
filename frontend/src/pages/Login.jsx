@@ -10,6 +10,7 @@ const Login = () => {
   const [state, setState] = useState("Login");
 
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,6 +23,7 @@ const Login = () => {
         await axios
           .post(`${backendUrl}/user/register`, {
             name,
+            phone,
             email,
             password,
           })
@@ -33,6 +35,7 @@ const Login = () => {
             toast.success(response.data.message);
             // clear the input fields
             setName("");
+            setPhone("");
             setEmail("");
             setPassword("");
           })
@@ -83,19 +86,33 @@ const Login = () => {
           appointment
         </p>
 
-        {/* name */}
+        {/* Full name and Phone number */}
         {state === "Sign Up" && (
           <div className="w-full">
-            <p>Full Name</p>
-            <input
-              type="text"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              required
-              className="border border-zinc-300 rounded w-full p-2 mt-1"
-            />
+            <div>
+              <p>Full Name</p>
+              <input
+                type="text"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                required
+                className="border border-zinc-300 rounded w-full p-2 mt-1"
+              />
+            </div>
+
+            <div>
+              <p>Phone Number</p>
+              <input
+                type="text"
+                onChange={(e) => setPhone(e.target.value)}
+                value={phone}
+                required
+                className="border border-zinc-300 rounded w-full p-2 mt-1"
+              />
+            </div>
           </div>
         )}
+
         {/* email */}
         <div className="w-full">
           <p>Email</p>
@@ -118,7 +135,11 @@ const Login = () => {
             className="border border-zinc-300 rounded w-full p-2 mt-1"
           />
         </div>
-        <button type="submit" className="bg-primary text-white w-full py-2 rounded-md text-base">
+        {/* Button */}
+        <button
+          type="submit"
+          className="bg-primary text-white w-full py-2 rounded-md text-base"
+        >
           {state === "Sign Up" ? "Create Account" : "Login"}
         </button>
         {state === "Sign Up" ? (

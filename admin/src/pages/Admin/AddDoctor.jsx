@@ -48,11 +48,11 @@ const AddDoctor = () => {
       await axios
         .post(`${backendUrl}/admin/add-doctor`, formData, {
           headers: {
-            Authorization: `Bearer ${adminToken}`
+            Authorization: `Bearer ${adminToken}`,
           },
         })
         .then((response) => {
-          toast.success(response.message);
+          toast.success(response.data.message);
           setName("");
           setEmail("");
           setPassword("");
