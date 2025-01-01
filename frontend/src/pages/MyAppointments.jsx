@@ -2,10 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useLocation } from "react-router-dom";
 
 const MyAppointments = () => {
-  const { backendUrl, token, getDoctorsData, currencySymbol, userData } =
+  const { backendUrl, token, getDoctorsData, currencySymbol, formatDate, userData } =
     useContext(AppContext);
 
   const [appointments, setAppointments] = useState([]);
@@ -35,28 +34,6 @@ const MyAppointments = () => {
       getAppointments();
     }
   }, [token]);
-  // To formate the date, from 20-10-200 to 20 October 2000
-  const months = [
-    "",
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const formatDate = (date) => {
-    const dateArray = date.split("-");
-    return (
-      dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2]
-    );
-  };
 
   // Cancel appointment
   const cancelAppointment = async (appointmentId) => {

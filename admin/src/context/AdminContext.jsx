@@ -64,6 +64,57 @@ export const AdminContextProvider = ({ children }) => {
       toast.error(error.message);
     }
   };
+
+  const [appointments, setAppointments] = useState([]);
+  // Get all appointments
+  const getAllAppointments = async () => {
+    try {
+      await axios
+        .get(`${backendUrl}/admin/all-appointments`, {
+          headers: {
+            Authorization: `Bearer ${adminToken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.appointments);
+          setAppointments(response.data.appointments);
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+  };
+  // Cancel the appointment
+  const cancelAppointment = async (appointmentId) => {
+    try {
+      await axios
+        .post(
+          `${backendUrl}/admin/cancel-appointment`,
+          { appointmentId },
+          {
+            headers: {
+              Authorization: `Bearer ${adminToken}`,
+            },
+          }
+        )
+        .then((response) => {
+          toast.success(response.data.message);
+          getAllAppointments();
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+  };
+
   const state = {
     adminToken,
     setAdminToken,
@@ -71,6 +122,10 @@ export const AdminContextProvider = ({ children }) => {
     doctors,
     getAllDoctors,
     changeDoctorAvailability,
+    appointments,
+    setAppointments,
+    getAllAppointments,
+    cancelAppointment
   };
   return (
     <AdminContext.Provider value={state}>{children}</AdminContext.Provider>

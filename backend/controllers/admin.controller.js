@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/doctors.model.js";
 import jwt from "jsonwebtoken";
 import fs from "fs";
+import appointmentModel from "../models/appointment.model.js";
 
 // add a doctor
 const addDoctor = async (req, res) => {
@@ -139,4 +140,47 @@ const allDoctors = async (req, res) => {
   }
 };
 
-export { addDoctor, adminLogin, allDoctors };
+// Get all appointments
+const allAppointments = async (req, res) => {
+  try {
+    const appointments = await appointmentModel.find({});
+    res.status(200).json({ success: true, appointments });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+// To cancel the appointment by admin
+const appointmentCancelled = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    // find the appointment data using the appointment id
+    const appointmentData = await appointmentModel.findById(appointmentId);
+    
+    // make the appointment cancel boolean to true
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      cancelled: true,
+    });
+    // Releasing doctor slot
+    const { docId, slotDate, slotTime } = appointmentData;
+    // get the doctor data from docId
+    const doctorData = await doctorModel.findById(docId);
+    // Get the doctor slot data
+    let slots_booked = doctorData.slots_booked;
+    // add the slot back to the doctor's slots booked
+    slots_booked[slotDate] = slots_booked[slotDate].filter(
+      (e) => e !== slotTime
+    );
+    // update the doctor's slots booked data
+    await doctorModel.findByIdAndUpdate(docId, { slots_booked });
+    // return success response
+    return res
+      .status(200)
+      .json({ success: true, message: "Appointment cancelled" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export { addDoctor, adminLogin, allDoctors, allAppointments, appointmentCancelled };

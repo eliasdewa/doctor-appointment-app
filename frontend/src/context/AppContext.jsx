@@ -41,6 +41,28 @@ export const AppContextProvider = ({ children }) => {
   useEffect(() => {
     getDoctorsData();
   }, []);
+  // To formate the date, from 20-10-200 to 20 October 2000
+  const months = [
+    "",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const formatDate = (date) => {
+    const dateArray = date.split("-");
+    return (
+      dateArray[0] + " " + months[Number(dateArray[1])] + " " + dateArray[2]
+    );
+  };
   // State variables for user data
   const [userData, setUserData] = useState(false);
   // get user data
@@ -79,6 +101,7 @@ export const AppContextProvider = ({ children }) => {
     setToken,
     doctors,
     getDoctorsData,
+    formatDate,
     userData,
     setUserData,
     getUserProfile,
