@@ -65,8 +65,8 @@ export const AdminContextProvider = ({ children }) => {
     }
   };
 
-  const [appointments, setAppointments] = useState([]);
   // Get all appointments
+  const [appointments, setAppointments] = useState([]);
   const getAllAppointments = async () => {
     try {
       await axios
@@ -114,6 +114,29 @@ export const AdminContextProvider = ({ children }) => {
       toast.error(error.message);
     }
   };
+  // Get dashboard data
+  const [dashboardData, setDashboardData] = useState(false);
+  const getDashboardData = async () => {
+    try {
+      await axios
+        .get(`${backendUrl}/admin/dashboard`, {
+          headers: {
+            Authorization: `Bearer ${adminToken}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.dashboardData);
+          setDashboardData(response.data.dashboardData);
+        })
+        .catch((error) => {
+          console.log(error.response.data.message);
+          toast.error(error.response.data.message);
+        });
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.message);
+    }
+  };
 
   const state = {
     adminToken,
@@ -125,7 +148,9 @@ export const AdminContextProvider = ({ children }) => {
     appointments,
     setAppointments,
     getAllAppointments,
-    cancelAppointment
+    cancelAppointment,
+    dashboardData,
+    getDashboardData,
   };
   return (
     <AdminContext.Provider value={state}>{children}</AdminContext.Provider>
