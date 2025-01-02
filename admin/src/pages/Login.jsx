@@ -2,32 +2,57 @@ import { useContext, useState } from "react";
 import { AdminContext } from "../context/AdminContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { DoctorContext } from "../context/DoctorContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [state, setState] = useState("Admin");
 
   const { setAdminToken, backendUrl } = useContext(AdminContext);
+  const { setDoctorToken } = useContext(DoctorContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
       if (state === "Admin") {
-        await axios.post(backendUrl + "/admin/login", {
-          email,
-          password,
-        }).then((response) => {
-          // store the token on local storage
-          localStorage.setItem("adminToken", response.data.token);
-          setAdminToken(response.data.token);
-          toast.success(response.data.message)
-        })
-        .catch((error) => {
-          console.log(error.response.data.message);
-          toast.error(error.response.data.message);
-        });
+        await axios
+          .post(backendUrl + "/admin/login", {
+            email,
+            password,
+          })
+          .then((response) => {
+            toast.success(response.data.message);
+            // store the token on local storage
+            localStorage.setItem("adminToken", response.data.token);
+            setAdminToken(response.data.token);
+            navigate("/admin-dashboard")
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
+          });
+      } else {
+        await axios
+          .post(backendUrl + "/doctor/login", {
+            email,
+            password,
+          })
+          .then((response) => {
+            toast.success(response.data.message);
+            // store the token on local storage
+            localStorage.setItem("doctorToken", response.data.token);
+            setDoctorToken(response.data.token);
+            navigate("/doctor-dashboard")
+          })
+          .catch((error) => {
+            console.log(error.response.data.message);
+            toast.error(error.response.data.message);
+          });
       }
     } catch (error) {
       console.log(error.message);

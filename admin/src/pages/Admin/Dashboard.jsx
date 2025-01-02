@@ -14,10 +14,10 @@ const Dashboard = () => {
   }, [adminToken]);
   if (!dashboardData) return null;
   return (
-    <div className="m-5">
+    <div className="w-full m-5">
       <div className="flex flex-wrap gap-3">
         {/* Total Doctors */}
-        <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all duration-300">
+        <div className="flex-1 flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all duration-300">
           <img className="w-14" src={assets.doctor_icon} alt="" />
           <div>
             <p className="text-gray-600 text-xl font-semibold">
@@ -27,7 +27,7 @@ const Dashboard = () => {
           </div>
         </div>
         {/* Total Appointments */}
-        <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all duration-300">
+        <div className="flex-1 flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all duration-300">
           <img className="w-14" src={assets.appointments_icon} alt="" />
           <div>
             <p className="text-gray-600 text-xl font-semibold">
@@ -37,7 +37,7 @@ const Dashboard = () => {
           </div>
         </div>
         {/* Total Patients */}
-        <div className="flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all duration-300">
+        <div className="flex-1 flex items-center gap-2 bg-white p-4 min-w-52 rounded border-2 border-gray-100 cursor-pointer hover:scale-105 transition-all duration-300">
           <img className="w-14" src={assets.patients_icon} alt="" />
           <div>
             <p className="text-gray-600 text-xl font-semibold">
