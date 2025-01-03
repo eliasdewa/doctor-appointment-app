@@ -128,6 +128,76 @@ const appointmentCancelled = async (req, res) => {
   }
 };
 
+// get dashboard data for doctor panel
+const doctorDashboard = async (req, res) => {
+  try {
+    const { docId } = req.body;
+    const appointments = await appointmentModel.find({docId})
+    // Total earnings
+    let earnings = 0;
+    appointments.map((item) => {
+      if (item.isCompleted || item.payment) {
+        earnings += item.amount;
+      }
+    });
+    // Total patients
+    let patients = [];
+    appointments.map((item) => {
+      if (!patients.includes(item.userId)) {
+        patients.push(item.userId);
+      }
+    });
+
+    const dashboardData = {
+      earnings,
+      appointments: appointments.length,
+      patients: patients.length,
+      latestAppointments: appointments.reverse().slice(0, 5)
+    }
+    res.status(200).json({ success: true, dashboardData });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// get doctor profile
+const doctorProfile = async (req, res) => {
+  try {
+    const { docId } = req.body;
+    // find the doctor
+    const docProfileData = await doctorModel.findById(docId).select("-password");
+    if (!docProfileData) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Doctor not found" });
+    }
+    // return the doctor profile
+    return res.status(200).json({ success: true, docProfileData });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// update doctor profile
+const updateDoctorProfile = async (req, res) => {
+  try {
+    const { docId, fees, address, available } = req.body;
+    await doctorModel.findByIdAndUpdate(docId, {fees, address, available})
+    // update doctor profile
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    // Cleanup: Remove file if Cloudinary upload fails
+    if (req.file) fs.unlinkSync(req.file.path);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 export {
   changeAvailability,
   doctorList,
@@ -135,4 +205,7 @@ export {
   getDoctorAppointments,
   appointmentCompleted,
   appointmentCancelled,
+  doctorDashboard,
+  doctorProfile,
+  updateDoctorProfile
 };

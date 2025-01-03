@@ -3,8 +3,10 @@ import { assets } from "../../assets/assets";
 import { AdminContext } from "../../context/AdminContext";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { AppContext } from "../../context/AppContext";
 const AddDoctor = () => {
-  const { adminToken, backendUrl } = useContext(AdminContext);
+  const { adminToken } = useContext(AdminContext);
+  const { backendUrl } = useContext(AppContext);
 
   const [docImg, setDocImg] = useState(false);
   const [name, setName] = useState("");

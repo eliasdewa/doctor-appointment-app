@@ -102,18 +102,6 @@ const MyAppointments = () => {
     }
   };
 
-  // const location = useLocation();
-  // const queryParams = new URLSearchParams(location.search);
-  // const paymentStatus = queryParams.get("payment");
-
-  // useEffect(() => {
-  //   if (paymentStatus === "true") {
-  //     toast.success("Payment successful!");
-  //   } else if (paymentStatus === "false") {
-  //     toast.error("Payment failed. Please try again.");
-  //   }
-  // }, [paymentStatus]);
-
   return (
     <div>
       <p className="pb-3 mt-12 text-lg font-medium text-zinc-700 border-b">
@@ -171,25 +159,29 @@ const MyAppointments = () => {
               <div></div>
               <div className="flex flex-col gap-2 justify-end">
                 {/* Pay */}
-                {!appointment.cancelled && !appointment.payment && (
-                  <button
-                    onClick={() => handlePayOnline(appointment)}
-                    className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300"
-                  >
-                    Pay Online
-                  </button>
-                )}
+                {!appointment.cancelled &&
+                  !appointment.payment &&
+                  !appointment.isCompleted && (
+                    <button
+                      onClick={() => handlePayOnline(appointment)}
+                      className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300"
+                    >
+                      Pay Online
+                    </button>
+                  )}
                 {/* Paid */}
-                {!appointment.cancelled && appointment.payment && (
-                  <button
-                    disabled
-                    className="text-lg text-center sm:min-w-48 py-2 border rounded bg-green-600 text-white"
-                  >
-                    Paid
-                  </button>
-                )}
+                {!appointment.cancelled &&
+                  !appointment.isCompleted &&
+                  appointment.payment && (
+                    <button
+                      disabled
+                      className="text-lg text-center sm:min-w-48 py-2 border rounded bg-green-600 text-white"
+                    >
+                      Paid
+                    </button>
+                  )}
                 {/* Cancel Button */}
-                {!appointment.cancelled && !appointment.payment && (
+                {!appointment.cancelled && !appointment.isCompleted && !appointment.payment && (
                   <button
                     onClick={() => cancelAppointment(appointment._id)}
                     className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-300"
@@ -205,8 +197,15 @@ const MyAppointments = () => {
                     Appointment cancelled
                   </button>
                 )}
+                {/* Completed */}
+                {appointment.isCompleted && (
+                  <button className="text-center sm:min-w-48 py-2 border border-green-400 rounded text-green-500 text-sm">
+                    Appointment Completed
+                  </button>
+                )}
                 {/* Delete appointment */}
-                {(appointment.cancelled || appointment.payment) && (
+                {(appointment.cancelled ||
+                  appointment.isCompleted) && (
                   <button className="text-center sm:min-w-48 py-2 border rounded text-red-500 hover:bg-red-700 hover:text-white text-sm">
                     Delete Appointment
                   </button>
@@ -217,7 +216,9 @@ const MyAppointments = () => {
         </div>
       ) : (
         <div className="mx-auto">
-          <h1 className="text-3xl font-bold text-center my-10">No Appointment Yet!</h1>
+          <h1 className="text-3xl font-bold text-center my-10">
+            No Appointment Yet!
+          </h1>
         </div>
       )}
     </div>

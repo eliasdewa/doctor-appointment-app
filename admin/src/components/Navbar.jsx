@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../context/AdminContext";
 import { assets } from "../assets/assets";
 import { DoctorContext } from "../context/DoctorContext";
@@ -7,13 +8,14 @@ const Navbar = () => {
   const { adminToken, setAdminToken } = useContext(AdminContext);
   const { doctorToken, setDoctorToken } = useContext(DoctorContext);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const logout = () => {
     adminToken && setAdminToken('');
     adminToken && localStorage.removeItem('adminToken');
     doctorToken && setDoctorToken('');
     doctorToken && localStorage.removeItem('doctorToken');
+    navigate('/');
   };
   return (
     <div className="flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-white">

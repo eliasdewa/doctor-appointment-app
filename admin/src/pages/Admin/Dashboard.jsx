@@ -4,9 +4,9 @@ import { assets } from "../../assets/assets";
 import { AppContext } from "../../context/AppContext";
 
 const Dashboard = () => {
+  const { formatDate } = useContext(AppContext);
   const { adminToken, dashboardData, getDashboardData, cancelAppointment } =
     useContext(AdminContext);
-  const { formatDate } = useContext(AppContext);
   useEffect(() => {
     if (adminToken) {
       getDashboardData();
