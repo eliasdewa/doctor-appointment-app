@@ -1,25 +1,63 @@
-import { assets } from "../assets/assets";
+// HeaderSlider.jsx
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
+
 const Header = () => {
+  const sliderImages = [
+    {
+      src: "https://static.vecteezy.com/system/resources/previews/027/298/490/non_2x/doctor-posing-portrait-free-photo.jpg",
+      alt: "Quality Healthcare",
+      caption: "Your Health, Our Priority",
+    },
+    {
+      src: "https://static.vecteezy.com/system/resources/previews/023/570/077/large_2x/portrait-of-girl-doctor-illustration-ai-generative-free-photo.jpg",
+      alt: "Expert Doctors",
+      caption: "Connect with Top Specialists",
+    },
+    {
+      src: "https://static.vecteezy.com/system/resources/previews/028/533/270/large_2x/doctor-and-his-team-smiling-generative-ai-free-photo.jpeg",
+      alt: "Easy Appointments",
+      caption: "Booking Made Simple",
+    },
+  ];
+
+  const settings = {
+    dots: true, // Enable dots navigation
+    infinite: true, // Infinite loop
+    speed: 3000, // Transition speed
+    slidesToShow: 1, // Show one slide at a time
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    //fade: true, // Smooth fading effect
+    adaptiveHeight: true,
+  };
+
   return (
-    <div className="flex flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-10 lg:px-20">
-      {/* ----Left Side */}
-      <div className="md:w-1/2 flex flex-col items-start justify-center gap-4 py-10 m-auto md:py-[10vw] md:mb-[-30px]">
-        <p className="text-3xl md:text-4xl lg:text-5xl text-white font-semibold leading-tight md:leading-tight lg:leading-tight">
-          Book Appointment <br /> with Trusted Doctors
-        </p>
-        <div className="flex flex-col md:flex-row items-center gap-3 text-white text-sm font-light">
-          <img className="w-28" src={assets.group_profiles} alt="" />
-          <p>Simply browse through our extensive list of trusted doctors</p>
-        </div>
-        <a className="flex items-center gap-2 bg-white px-8 py-3 rounded-full text-gray-600 text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300" href="#specialty">
-          Book Appointment <img className="w-3" src={assets.arrow_icon} alt="" />
-        </a>
-      </div>
-      {/* ----Right Side */}
-      <div className="md:w-1/2 relative">
-        <img className="w-full md:absolute bottom-0 h-auto rounded-lg" src={assets.header_img} alt="" />
-      </div>
+    <div className="relative overflow-hidden">
+      <Slider {...settings}>
+        {sliderImages.map((image, index) => (
+          <div key={index} className="relative w-full h-screen">
+            <img
+              src={image.src}
+              alt={image.alt}
+              className="relative w-full h-screen object-fill"
+            />
+            <div className="overlay">
+              <h1>{image.caption}</h1>
+              <p>Book an appointment with ease and confidence.</p>
+              <button className="cta-button">
+                <Link to={"/doctors"}>Get Started</Link>
+              </button>
+            </div>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 };
+
 export default Header;

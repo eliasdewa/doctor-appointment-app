@@ -2,7 +2,7 @@ import { specialtyData } from "../assets/assets"
 import { Link } from "react-router-dom"
 const Specialty = () => {
   return (
-    <div id="specialty" className="flex flex-col items-center gap-4 py-16 text-gray-800">
+    <div id="specialty" className=" flex flex-col items-center gap-4 py-16 text-gray-800">
       <h1 className="text-3xl font-medium">Find by Specialty</h1>
       <p className="sm:w-1/3 text-center text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur voluptas animi quas? Aliquid veniam repudiandae quia blanditiis nam quo in.</p>
       <div className="flex sm:justify-center gap-4 pt-5 w-full overflow-scroll">

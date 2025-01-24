@@ -26,7 +26,7 @@ export const AppContextProvider = ({ children }) => {
         .get(`${backendUrl}/doctor/list`)
         .then((response) => {
           setDoctors(response.data.doctors);
-          // console.log(response.data.doctors);
+          console.log(response.data.doctors);
         })
         .catch((error) => {
           console.log(error.response.data.message);
@@ -41,6 +41,7 @@ export const AppContextProvider = ({ children }) => {
   useEffect(() => {
     getDoctorsData();
   }, []);
+
   // To formate the date, from 20-10-200 to 20 October 2000
   const months = [
     "",

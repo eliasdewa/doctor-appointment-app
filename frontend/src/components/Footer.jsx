@@ -2,11 +2,11 @@ import { assets } from "../assets/assets";
 
 const Footer = () => {
   return (
-    <div>
-      <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm">
+    <div className="xl:px-24 pt-10 pb-4 px-4 text-base-content">
+      <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 mb-6 text-sm">
         {/* Left section */}
         <div>
-          <img className="mb-5 w-40" src={assets.logo} alt="" />
+          <img className="mb-5 w-20" src={assets.logo} alt="" />
           <p className="w-full md:w-2/3 text-gray-600 leading-6">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit.
             Perferendis alias debitis quisquam, maiores autem quam mollitia ipsa
@@ -38,7 +38,7 @@ const Footer = () => {
       {/* Copy right */}
       <div>
         <hr />
-        <p className="py-5 text-sm text-center">Copyright 2024 @ Doctor Appointment. All rights reserved.</p>
+        <p className="py-5 text-sm text-center">© 2025 Ed Doctor Appointment. All rights reserved.</p>
       </div>
     </div>
   );
