@@ -103,7 +103,7 @@ const MyAppointments = () => {
   };
 
   return (
-    <div>
+    <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-20 xl:px-24">
       <p className="pb-3 mt-12 text-lg font-medium text-zinc-700 border-b">
         My appointments
       </p>

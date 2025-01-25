@@ -2,7 +2,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
-import { LogIn, LogOut, Menu, X } from "lucide-react";
+import { CalendarRange, ChevronDown, LogIn, LogOut, Menu, UserRoundPen, X } from "lucide-react";
+import { toast } from "react-toastify";
 
 const navLink = [
   {
@@ -53,6 +54,7 @@ const Navbar = () => {
   const logout = () => {
     setToken(false);
     localStorage.removeItem("token");
+    toast.success("User logged out");
     navigate("/login");
   };
   return (
@@ -88,29 +90,29 @@ const Navbar = () => {
               {/* Profile pic */}
               <img className="w-8 rounded-full" src={userData.image} alt="" />
               {/* Dropdown menu icon */}
-              <img className="w-2.5" src={assets.dropdown_icon} alt="" />
+              <ChevronDown />
               {/* Dropdown menu */}
               <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
                 <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
                   <p
                     onClick={() => navigate("profile")}
-                    className="hover:text-black cursor-pointer"
+                    className="flex items-center transition duration-300 ease-in-out hover:text-black cursor-pointer"
                   >
-                    My Profile
+                    <UserRoundPen /><span className="ml-2">My Profile</span>
                   </p>
                   <p
                     onClick={() => navigate("my-appointments")}
-                    className="hover:text-black cursor-pointer"
+                    className="flex items-center transition duration-300 ease-in-out hover:text-black cursor-pointer"
                   >
-                    My Appointment
+                    <CalendarRange /><span className="ml-2">My Appointment</span>
                   </p>
-                  <button
-                    className="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-md flex items-center transition duration-300 ease-in-out"
+                  <p
+                    className="flex items-center transition duration-300 ease-in-out hover:text-black cursor-pointer"
                     onClick={logout}
                   >
-                    <LogOut size={18} />
-                    <span className="hidden sm:inline ml-2">Log Out</span>
-                  </button>
+                    <LogOut />
+                    <span className="ml-2">Log Out</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -134,7 +136,7 @@ const Navbar = () => {
         </div>
         {/* Mobile menu */}
         {showMenu && (
-          <div className="md:hidden w-[40%] h-screen absolute top-0 right-0 bg-slate-200 p-4">
+          <div className="md:hidden w-[40%] h-screen absolute top-0 right-0 bg-slate-200 p-4 z-50">
             <div className="flex flex-col gap-8 py-4 relative">
               <ul className="flex flex-col gap-4 pt-3">
                 {navLink.map((item) => (

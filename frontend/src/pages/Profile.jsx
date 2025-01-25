@@ -48,7 +48,7 @@ const Profile = () => {
 
   return (
     userData && (
-      <div className="max-w-lg flex flex-col gap-2 text-sm">
+      <div className="mt-6 max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-20 xl:px-24 flex flex-col gap-2 text-sm">
         {isEdit ? (
           <label htmlFor="image" className="block mt-4">
             <div className="inline-block relative cursor-pointer">

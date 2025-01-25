@@ -8,7 +8,7 @@ import { AppContextProvider } from "../context/AppContext";
 const Layout = () => {
   return (
     <AppContextProvider>
-      <ToastContainer />
+      <ToastContainer autoClose={2500} />
       <Navbar />
       <div className="min-h-screen">
         <Outlet />

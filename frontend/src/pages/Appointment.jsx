@@ -138,7 +138,7 @@ const Appointment = () => {
     }
   };
   return (
-    <div>
+    <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-20 xl:px-24">
       {/* Doctor details */}
       <div className="flex flex-col sm:flex-row gap-4">
         <div>

@@ -44,12 +44,16 @@ const Header = () => {
             <img
               src={image.src}
               alt={image.alt}
-              className="relative w-full h-screen object-fill"
+              className="relative w-full h-screen object-cover sm:object-fill"
             />
-            <div className="overlay">
-              <h1>{image.caption}</h1>
-              <p>Book an appointment with ease and confidence.</p>
-              <button className="cta-button">
+            <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-end text-white text-center p-5 bg-overlay">
+              <h1 className="text-5xl font-bold mb-5">{image.caption}</h1>
+              <p className="text-2xl mb-7">
+                Book an appointment with ease and confidence.
+              </p>
+              <button
+                className="text-white bg-[#007bff] hover:bg-blue-600 font-semibold rounded-md text-sm px-4 py-2.5"
+              >
                 <Link to={"/doctors"}>Get Started</Link>
               </button>
             </div>

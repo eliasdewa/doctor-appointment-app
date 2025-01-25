@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { assets } from "../assets/assets";
 import { motion } from "framer-motion";
 const About = () => {
   return (
@@ -15,7 +14,10 @@ const About = () => {
         </p>
       </motion.div>
       <div className="flex flex-col md:flex-row gap-2 justify-between">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}>
           <p className="max-w-full text-xl text-gray-600">
             Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
             sint. Velit officia consequat duis enim velit mollit. Exercitation
@@ -29,15 +31,18 @@ const About = () => {
             <Link
               to="/contact"
               title=""
-              className="transition-all duration-200 text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-500 hover:underline"
+              className="transition-all duration-200 text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-500"
             >
               {" "}
               Contact us
             </Link>
           </p>
-        </div>
+        </motion.div>
 
-        <img
+        <motion.img
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           className="max-w-lg"
           src="https://static.vecteezy.com/system/resources/previews/048/638/970/large_2x/medical-professionals-with-physician-light-brown-background-studiopresentation-and-organized-free-photo.jpg"
           alt=""
