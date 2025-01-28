@@ -93,7 +93,7 @@ const Login = () => {
             {state === "Sign Up" ? "Create Account" : "Login"}
           </h2>
           <h2 className="text-center text-xl font-extrabold text-emerald-400">
-            Please {state === "Sign Up" ? "sign up" : "log in"} to book
+            Please {state === "Sign Up" ? "sign up" : "login"} to book
             appointment
           </h2>
         </div>
@@ -104,7 +104,7 @@ const Login = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="bg-white py-8 px-4 shadow-xl sm:rounded-lg sm:px-10">
+        <div className="border shadow-2xl bg-white mx-auto p-8 sm:rounded-lg sm:px-10">
           <form onSubmit={onSubmitHandler} className="space-y-6">
             {/* Name */}
             {state === "Sign Up" && (

@@ -26,7 +26,7 @@ export const AppContextProvider = ({ children }) => {
         .get(`${backendUrl}/doctor/list`)
         .then((response) => {
           setDoctors(response.data.doctors);
-          console.log(response.data.doctors);
+          // console.log(response.data.doctors);
         })
         .catch((error) => {
           console.log(error.response.data.message);

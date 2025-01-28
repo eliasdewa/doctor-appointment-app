@@ -1,126 +1,179 @@
 import { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { motion } from "framer-motion";
+import { Search } from "lucide-react";
+
+const categories = [
+  "All",
+  "General Physician",
+  "Gynecologist",
+  "Dermatologist",
+  "Pediatricians",
+  "Neurologist",
+  "Gastroenterologist",
+];
 const Doctors = () => {
-  const { specialty } = useParams();
+  const navigate = useNavigate();
   // get all doctors
   const { doctors } = useContext(AppContext);
-  // filter doctors by specialty
-  const [filterDocs, setFilterDocs] = useState([]);
 
-  const [showFiler, setShowFiler] = useState(false);
+  // Filter doctors based on the selected specialty & search query
+  const [selectedSpecialty, setSelectedSpecialty] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const navigate = useNavigate();
+  const filteredDoctors = doctors.filter((doctor) => {
+    const matchesCategory =
+      selectedSpecialty === "All" || doctor.specialty === selectedSpecialty;
+    const matchesSearch = doctor.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+  // Toggle filter visibility
+  const [showFilter, setShowFilter] = useState(false);
 
-  // filter docs by specialty or display all docs
-  const applyFilter = () => {
-    if (specialty) {
-      setFilterDocs(doctors.filter((doc) => doc.specialty === specialty));
-    } else {
-      setFilterDocs(doctors);
-    }
-  };
-  // Then, to apply the filter when the specialty or doctors is changed
-  useEffect(() => {
-    applyFilter();
-  }, [doctors, specialty]);
+  // pagination
+  const ITEMS_PER_PAGE = 6; // Number of doctors to display per page
+  const [currentPage, setCurrentPage] = useState(1);
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(filteredDoctors.length / ITEMS_PER_PAGE);
+  // Get the doctors for the current page
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentDoctors = filteredDoctors.slice(startIndex, endIndex);
+  // console.log(currentDoctors)
+
   return (
     <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-20 xl:px-24">
-      <div className="flex flex-col items-start gap-5 mt-5">
-        <button
-          onClick={() => setShowFiler((prev) => !prev)}
-          className={`py-1 px-3 border rounded text-sm transition-all sm:hidden ${
-            showFiler ? "bg-primary text-white" : ""
-          }`}
-        >
-          Filter
-        </button>
-        {/* Filter option */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className={`${
-            showFiler ? "flex" : "hidden sm:flex"
-          } flex gap-4 text-sm text-gray-600 `}
-        >
-          <p
-            onClick={() => navigate("/doctors")}
-            className="w-[94vw] sm:w-auto cursor-pointer px-2 bg-emerald-600 hover:bg-emerald-700 text-white"
+      <div className="flex flex-col sm:flex-row gap-5 mt-5">
+        {/* Left side */}
+        <div>
+          {/* Filter btn */}
+          <button
+            onClick={() => setShowFilter((prev) => !prev)}
+            className={`py-1 px-3 border rounded text-sm transition-all sm:hidden mt-6 ${
+              showFilter ? "bg-primary text-white" : ""
+            }`}
           >
-            All
-          </p>
-          <NavLink
-            to={"/doctors/General Physician"}
-            className="w-[94vw] sm:w-auto cursor-pointer"
+            Filter
+          </button>
+          {/* Specialty Filters */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className={`${
+              showFilter ? "flex" : "hidden sm:flex"
+            } flex-col justify-center space-y-4 my-6`}
           >
-            General Physician
-          </NavLink>
-          <NavLink
-            to={"/doctors/Gynecologist"}
-            className="w-[94vw] sm:w-auto cursor-pointer"
+            {categories.map((specialty) => (
+              <button
+                key={specialty}
+                onClick={() => {
+                  setSelectedSpecialty(specialty);
+                  setCurrentPage(1); // Reset to the first page when changing categories
+                  setShowFilter((prev) => !prev);
+                }}
+                className={`px-4 py-2 rounded ${
+                  selectedSpecialty === specialty
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 text-gray-700"
+                }`}
+              >
+                {specialty}
+              </button>
+            ))}
+          </motion.div>
+        </div>
+        {/* Right side */}
+        <div className="flex-1 flex-col gap-2">
+          {/* Search Input */}
+          <div className="w-full flex flex-col md:flex-row items-center justify-center gap-2 sm:mt-6 mb-4">
+            <input
+              type="text"
+              placeholder="Search doctor..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setCurrentPage(1); // Reset to the first page when searching
+              }}
+              className="search-bar w-full max-w-4xl p-2 border rounded"
+            />
+            <button className="hidden md:block w-full md:w-auto py-2 px-8 bg-primary text-white rounded">
+              <Search />
+            </button>
+          </div>
+
+          {/* Display doctors */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-full grid grid-cols-auto gap-4 gap-x-6"
           >
-            Gynecologist
-          </NavLink>
-          <NavLink
-            to={"/doctors/Dermatologist"}
-            className="w-[94vw] sm:w-auto cursor-pointer"
-          >
-            Dermatologist
-          </NavLink>
-          <NavLink
-            to={"/doctors/Pediatricians"}
-            className="w-[94vw] sm:w-auto cursor-pointer"
-          >
-            Pediatricians
-          </NavLink>
-          <NavLink
-            to={"/doctors/Neurologist"}
-            className="w-[94vw] sm:w-auto cursor-pointer"
-          >
-            Neurologist
-          </NavLink>
-          <NavLink
-            to={"/doctors/Gastroenterologist"}
-            className="w-[94vw] sm:w-auto cursor-pointer"
-          >
-            Gastroenterologist
-          </NavLink>
-        </motion.div>
-        {/* Display doctors */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full grid grid-cols-auto gap-4 gap-y-6"
-        >
-          {filterDocs.map((item, index) => (
-            <div
-              onClick={() => navigate(`/appointment/${item._id}`)}
-              key={index}
-              className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
-            >
-              <img src={item.image} alt="" className="bg-blue-50" />
-              <div className="p-4">
-                <div
-                  className={`flex items-center gap-2 text-sm text-center ${
-                    item.available ? "text-green-500" : "text-gray-500"
-                  }`}
-                >
-                  <p
-                    className={`w-2 h-2 ${
-                      item.available ? "bg-green-500" : "bg-gray-500"
-                    } rounded-full`}
-                  ></p>
-                  <p>{item.available ? "Available" : "Not Available"}</p>
+            {currentDoctors.map((item, index) => (
+              <div
+                onClick={() => {
+                  navigate(`/appointment/${item._id}`);
+                  scrollTo(0, 0);
+                }}
+                key={index}
+                className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
+              >
+                <img src={item.image} alt="" className="bg-blue-50" />
+                <div className="p-4">
+                  <div
+                    className={`flex items-center gap-2 text-sm text-center ${
+                      item.available ? "text-green-500" : "text-gray-500"
+                    }`}
+                  >
+                    <p
+                      className={`w-2 h-2 ${
+                        item.available ? "bg-green-500" : "bg-gray-500"
+                      } rounded-full`}
+                    ></p>
+                    <p>{item.available ? "Available" : "Not Available"}</p>
+                  </div>
+                  <p className="text-gray-900 text-lg font-medium">
+                    {item.name}
+                  </p>
+                  <p className="text-gray-600 text-sm">{item.specialty}</p>
                 </div>
-                <p className="text-gray-900 text-lg font-medium">{item.name}</p>
-                <p className="text-gray-600 text-sm">{item.specialty}</p>
               </div>
-            </div>
-          ))}
-        </motion.div>
+            ))}
+          </motion.div>
+          {/* Pagination controller */}
+          <div className="flex justify-center mt-8 space-x-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+            >
+              Previous
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index + 1}
+                onClick={() => setCurrentPage(index + 1)}
+                className={`px-4 py-2 ${
+                  currentPage === index + 1 ? "bg-blue-700" : "bg-blue-500"
+                } text-white rounded`}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-300"
+            >
+              Next
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

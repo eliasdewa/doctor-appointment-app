@@ -44,8 +44,8 @@ const Contact = () => {
         <div className="container mx-auto">
           <div className="grid sm:grid-cols-2 items-center gap-16 p-8 mx-auto max-w-4xl bg-white shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)]  text-[#333] py-12 justify-center rounded-xl border border-white shadow-black/5 saturate-200">
             <div className="my-8 mx-4 grid gap-3 px-4">
-              <h1 class="text-3xl font-extrabold">Let's Talk</h1>
-              <p class="text-sm text-gray-400 mt-3">
+              <h1 className="text-3xl font-extrabold">Let's Talk</h1>
+              <p className="text-sm text-gray-400 mt-3">
                 Have some big idea or brand to develop and need help? Then reach
                 out we'd love to hear about your project and provide help.
               </p>
