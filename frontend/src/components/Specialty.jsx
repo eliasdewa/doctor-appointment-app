@@ -1,21 +1,76 @@
-import { specialtyData } from "../assets/assets"
-import { Link } from "react-router-dom"
+import { motion } from "framer-motion";
+import { fadeIn } from "../variant";
 const Specialty = () => {
   return (
-    <div id="specialty" className=" flex flex-col items-center gap-4 py-16 text-gray-800">
-      <h1 className="text-3xl font-medium">Find by Specialty</h1>
-      <p className="sm:w-1/3 text-center text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consectetur voluptas animi quas? Aliquid veniam repudiandae quia blanditiis nam quo in.</p>
-      <div className="flex sm:justify-center gap-4 pt-5 w-full overflow-scroll">
-        {
-          specialtyData.map((item, index) => (
-            <Link className="flex flex-col items-center text-xs cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500" key={index} to={`/doctors/${item.specialty}`} onClick={() => scrollTo(0,0)}>
-              <img className="w-16 sm:w-24 mb-2" src={item.image} alt="" />
-              <p>{item.specialty}</p>
-            </Link>
-          ))
-        }
+    <div
+      id="specialty"
+      className="bg-blue-50 flex flex-col items-center gap-4 py-16 text-gray-800 mt-10"
+    >
+      <motion.div
+        variants={fadeIn("down", 0.2)}
+        initial="hidden"
+        whileInView={"show"}
+        viewport={{ once: false, amount: 0.7 }}
+        className="mb-6"
+      >
+        <h2 className="text-3xl font-bold text-center text-blue-900">
+          Our Services
+        </h2>
+        <p className="text-center text-sm">
+          Our team offers a wide range of specialized services to help you
+          achieve your health goals. From physical therapy to mental health
+          support, we've got you covered.
+        </p>
+      </motion.div>
+      <div
+        viewport={{ once: false, amount: 0.7 }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto"
+      >
+        <div className="bg-blue-100 p-6 mx-2 rounded-lg shadow-md text-center cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500">
+          <h3 className="text-xl font-bold text-blue-900 mb-4">
+            General Checkup
+          </h3>
+          <p className="text-gray-600">
+            Comprehensive health checkups to keep you in the best shape.
+          </p>
+        </div>
+        <div className="bg-blue-100 p-6 mx-2 rounded-lg shadow-md text-center cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500">
+          <h3 className="text-xl font-bold text-blue-900 mb-4">Dental Care</h3>
+          <p className="text-gray-600">
+            Expert dental care for a bright and healthy smile.
+          </p>
+        </div>
+        <div className="bg-blue-100 p-6 mx-2 rounded-lg shadow-md text-center cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500">
+          <h3 className="text-xl font-bold text-blue-900 mb-4">Pediatrics</h3>
+          <p className="text-gray-600">
+            Specialized care for your little ones.
+          </p>
+        </div>
+        <div className="bg-blue-100 p-6 mx-2 rounded-lg shadow-md text-center cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500">
+          <h3 className="text-xl font-bold text-blue-900 mb-4">
+            Emergency medicine
+          </h3>
+          <p className="text-gray-600">
+            Stabilize and treat patients with a wide range of undifferentiated
+            physical and behavioral disorders
+          </p>
+        </div>
+        <div className="bg-blue-100 p-6 mx-2 rounded-lg shadow-md text-center cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500">
+          <h3 className="text-xl font-bold text-blue-900 mb-4">Surgery</h3>
+          <p className="text-gray-600">
+            Injury repairs, surgeries, and other procedures for physical health.
+          </p>
+        </div>
+        <div className="bg-blue-100 p-6 mx-2 rounded-lg shadow-md text-center cursor-pointer flex-shrink-0 hover:translate-y-[-10px] transition-all duration-500">
+          <h3 className="text-xl font-bold text-blue-900 mb-4">
+            Laboratory services
+          </h3>
+          <p className="text-gray-600">
+            Diagnostic tests, blood tests, and other laboratory procedures.
+          </p>
+        </div>
       </div>
     </div>
-  )
-}
-export default Specialty
+  );
+};
+export default Specialty;

@@ -2,7 +2,7 @@ import { assets } from "../assets/assets";
 
 const Footer = () => {
   return (
-    <div className="xl:px-24 pt-10 pb-4 px-4 text-base-content">
+    <div className="max-w-screen-2xl mx-auto px-6">
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 mb-6 text-sm">
         {/* Left section */}
         <div>

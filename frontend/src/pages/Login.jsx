@@ -83,10 +83,10 @@ const Login = () => {
   return (
     <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <motion.div
-        className="sm:mx-auto sm:w-full sm:max-w-md"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
+        className="sm:mx-auto sm:w-full sm:max-w-md"
       >
         <div className="flex flex-col gap-3 m-auto items-center min-w-[340px] sm:min-w-96">
           <h2 className="text-center text-3xl font-extrabold">
@@ -99,10 +99,10 @@ const Login = () => {
         </div>
       </motion.div>
       <motion.div
-        className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
+        className="mt-8 sm:mx-auto sm:w-full sm:max-w-md"
       >
         <div className="border shadow-2xl bg-white mx-auto p-8 sm:rounded-lg sm:px-10">
           <form onSubmit={onSubmitHandler} className="space-y-6">

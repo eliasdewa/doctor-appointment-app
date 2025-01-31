@@ -3,7 +3,27 @@ import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const MyAppointments = () => {
+const appointments = [
+  {
+    id: 1,
+    doctor: "Dr. John Doe",
+    specialty: "Cardiologist",
+    date: "2023-10-15",
+    time: "10:00 AM",
+    status: "Upcoming",
+  },
+  {
+    id: 2,
+    doctor: "Dr. Jane Smith",
+    specialty: "Dermatologist",
+    date: "2023-10-20",
+    time: "02:00 PM",
+    status: "Pending Payment",
+  },
+  // Add more appointments...
+];
+
+const MyAppointmentsPage = () => {
   const {
     backendUrl,
     token,
@@ -13,7 +33,8 @@ const MyAppointments = () => {
     userData,
   } = useContext(AppContext);
 
-  const [appointments, setAppointments] = useState([]);
+  const [appointmentsList, setAppointmentsList] = useState([]);
+
   // get all the appointments
   const getAppointments = async () => {
     try {
@@ -23,7 +44,7 @@ const MyAppointments = () => {
         })
         .then((response) => {
           // console.log(response.data.appointments);
-          setAppointments(response.data.appointments);
+          setAppointmentsList(response.data.appointments);
         })
         .catch((error) => {
           console.log(error.response.data.message);
@@ -34,6 +55,7 @@ const MyAppointments = () => {
       toast.error(error.message);
     }
   };
+
   // Get appointments on mount
   useEffect(() => {
     if (token) {
@@ -41,7 +63,6 @@ const MyAppointments = () => {
     }
   }, [token]);
 
-  // Cancel appointment
   const cancelAppointment = async (appointmentId) => {
     try {
       // console.log(appointmentId);
@@ -103,60 +124,47 @@ const MyAppointments = () => {
   };
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-8">
-      <p className="pb-3 mt-12 text-lg font-medium text-zinc-700 border-b">
-        My appointments
-      </p>
+    <div className="max-w-screen-2xl mx-auto px-8 py-12">
+      <h1 className="text-3xl font-bold text-blue-900 mb-8">My Appointments</h1>
       {/* Display appointments */}
-      {appointments.length > 0 ? (
-        <div>
-          {appointments.map((appointment, index) => (
+      {appointmentsList.length > 0 ? (
+        <div className="space-y-6">
+          {appointmentsList.map((appointment) => (
             <div
-              key={index}
-              className="grid grid-cols-[1fr_2fr] gap-4 sm:flex sm:gap-6 py-2 border-b"
+              key={appointment.id}
+              className="bg-white p-6 rounded-lg shadow-md flex flex-col sm:flex-row sm:justify-between justify-start border"
             >
               <div>
                 <img
                   src={appointment.docData.image}
                   alt=""
-                  className="w-32 bg-indigo-50"
+                  className="w-32 bg-indigo-50 mb-4"
                 />
-              </div>
-              <div className="flex-1 text-sm text-zinc-600">
-                <p className="text-neutral-800 font-semibold">
+                <h3 className="text-xl font-bold text-blue-900 mb-2">
                   {appointment.docData.name}
+                </h3>
+                <p className="text-gray-600 mb-2">
+                  <strong>Specialty: </strong>
+                  {appointment.docData.specialty}
                 </p>
-                <p>{appointment.docData.specialty}</p>
-                <p
-                  className="text-zinc-700 font-medium mt-1
-                "
-                >
-                  Address:
+                <p className="text-gray-600 mb-2">
+                  <strong>Address 1: </strong>
+                  {appointment.docData.address.line1}
                 </p>
-
-                <p className="text-xs">{appointment.docData.address.line1}</p>
-                <p className="text-xs">{appointment.docData.address.line1}</p>
-
-                <p
-                  className="text-zinc-700 font-medium mt-1
-                "
-                >
-                  Date & Time:
+                <p className="text-gray-600 mb-2">
+                  <strong>Address 2: </strong>
+                  {appointment.docData.address.line2}
                 </p>
-                <p className="text-xs">
-                  {formatDate(appointment.slotDate)} @ {appointment.slotTime}
+                <p className="text-gray-600 mb-2">
+                  <strong>Date & Time: </strong>
+                  {formatDate(appointment.slotDate)} at {appointment.slotTime}
                 </p>
-                <p
-                  className="text-zinc-700 font-medium mt-1
-                "
-                >
-                  Fees:{" "}
-                  <span className="text-xs">
-                    {appointment.amount} {currencySymbol}
-                  </span>
+                <p className="text-gray-600 mb-2">
+                  <strong>Fee: </strong>
+                  {appointment.amount} {currencySymbol}
                 </p>
               </div>
-              <div></div>
+
               <div className="flex flex-col gap-2 justify-end">
                 {/* Pay */}
                 {!appointment.cancelled &&
@@ -164,9 +172,9 @@ const MyAppointments = () => {
                   !appointment.isCompleted && (
                     <button
                       onClick={() => handlePayOnline(appointment)}
-                      className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-300"
+                      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
                     >
-                      Pay Online
+                      Proceed to payment
                     </button>
                   )}
                 {/* Paid */}
@@ -181,33 +189,28 @@ const MyAppointments = () => {
                     </button>
                   )}
                 {/* Cancel Button */}
-                {!appointment.cancelled && !appointment.isCompleted && !appointment.payment && (
-                  <button
-                    onClick={() => cancelAppointment(appointment._id)}
-                    className="text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-300"
-                  >
-                    Cancel appointment
-                  </button>
-                )}
+                {!appointment.cancelled &&
+                  !appointment.isCompleted &&
+                  !appointment.payment && (
+                    <button
+                      onClick={() => cancelAppointment(appointment._id)}
+                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+                    >
+                      Cancel appointment
+                    </button>
+                  )}
                 {appointment.cancelled && (
                   <button
                     disabled
-                    className="text-sm text-center sm:min-w-48 py-2 border rounded bg-red-500"
+                    className="bg-red-600 text-white px-4 py-2 rounded-lg transition duration-300"
                   >
                     Appointment cancelled
                   </button>
                 )}
                 {/* Completed */}
                 {appointment.isCompleted && (
-                  <button className="text-center sm:min-w-48 py-2 border border-green-400 rounded text-green-500 text-sm">
-                    Appointment Completed
-                  </button>
-                )}
-                {/* Delete appointment */}
-                {(appointment.cancelled ||
-                  appointment.isCompleted) && (
-                  <button className="text-center sm:min-w-48 py-2 border rounded text-red-500 hover:bg-red-700 hover:text-white text-sm">
-                    Delete Appointment
+                  <button disabled className="bg-green-600 text-white px-4 py-2 rounded-lg transition duration-300">
+                    Completed
                   </button>
                 )}
               </div>
@@ -224,4 +227,5 @@ const MyAppointments = () => {
     </div>
   );
 };
-export default MyAppointments;
+
+export default MyAppointmentsPage;

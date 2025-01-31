@@ -4,10 +4,12 @@ import Home from "../pages/Home";
 import Doctors from "../pages/Doctors";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
-import Profile from "../pages/Profile";
-import MyAppointments from "../pages/MyAppointments";
+// import Profile from "../pages/Profile";
+// import MyAppointments from "../pages/MyAppointments";
 import Appointment from "../pages/Appointment";
 import Login from "../pages/Login";
+import ProfilePage from "../pages/ProfilePage";
+import MyAppointmentsPage from "../pages/MyAppointmentsPage";
 
 const router = createBrowserRouter([
   {
@@ -36,11 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile/>
+        element: <ProfilePage/>
       },
       {
         path: "/my-appointments",
-        element: <MyAppointments/>
+        element: <MyAppointmentsPage/>
       },
       {
         path: "/appointment/:docId",

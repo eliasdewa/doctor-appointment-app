@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 const Contact = () => {
   return (
-    <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-20 xl:px-24">
+    <div className="max-w-screen-2xl mx-auto px-6">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -26,13 +26,7 @@ const Contact = () => {
         />
         <div className="absolute inset-0 h-full w-full bg-black/50"></div>
         <div className="relative pt-28 text-center">
-          <h2 className="block antialiased tracking-normal font-sans font-semibold leading-[1.3] text-white mb-4 text-3xl lg:text-4xl">
-            Contact Us
-          </h2>
-          <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec
-            purus feugiat, vestibulum mi nec, ultricies metus.
-          </p>
+          <h2 className="text-3xl font-bold text-white mb-8">Get in Touch</h2>
         </div>
       </motion.div>
       <motion.div
@@ -46,8 +40,7 @@ const Contact = () => {
             <div className="my-8 mx-4 grid gap-3 px-4">
               <h1 className="text-3xl font-extrabold">Let's Talk</h1>
               <p className="text-sm text-gray-400 mt-3">
-                Have some big idea or brand to develop and need help? Then reach
-                out we'd love to hear about your project and provide help.
+                Do you want to contact us, please use the contact form and send us a message. Or try to reach out on our social media platform
               </p>
               {/* Contact */}
               <div className="flex justify-between">
@@ -55,8 +48,9 @@ const Contact = () => {
                 <div className="mt-12">
                   <h2 className="text-lg font-extrabold">Email</h2>
                   <a
-                    href="mailto:eliasdewa3@gmail.com" target="_blank"
-                    className="mt-3 bg-[#e6e6e6cf] h-10 w-10 mx-auto rounded-full flex items-center justify-center shrink-0"
+                    href="mailto:eliasdewa3@gmail.com"
+                    target="_blank"
+                    className="mt-3 bg-[#e6e6e6cf] h-10 w-10 mx-auto rounded-full flex items-center justify-center shrink-0 hover:bg-blue-400"
                   >
                     <Mail />
                   </a>
@@ -65,8 +59,9 @@ const Contact = () => {
                 <div className="mt-12">
                   <h2 className="text-lg font-extrabold">Phone</h2>
                   <a
-                    href="mailto:eliasdewa3@gmail.com" target="_blank"
-                    className="mt-3 bg-[#e6e6e6cf] h-10 w-10 mx-auto rounded-full flex items-center justify-center shrink-0"
+                    href="mailto:eliasdewa3@gmail.com"
+                    target="_blank"
+                    className="mt-3 bg-[#e6e6e6cf] h-10 w-10 mx-auto rounded-full flex items-center justify-center shrink-0 hover:bg-blue-400"
                   >
                     <PhoneCall />
                   </a>
@@ -76,8 +71,9 @@ const Contact = () => {
                   <h2 className="text-lg font-extrabold">Location</h2>
 
                   <a
-                    href="https://maps.app.goo.gl/tbUV3q4HBcybVyDY8" target="_blank"
-                    className="mt-3 bg-[#e6e6e6cf] h-10 w-10 mx-auto rounded-full flex items-center justify-center shrink-0"
+                    href="https://maps.app.goo.gl/tbUV3q4HBcybVyDY8"
+                    target="_blank"
+                    className="mt-3 bg-[#e6e6e6cf] h-10 w-10 mx-auto rounded-full flex items-center justify-center shrink-0 hover:bg-blue-400"
                   >
                     <MapPinned />
                   </a>

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { motion } from "framer-motion";
 import { Search } from "lucide-react";
+import DoctorCard from "../components/DoctorCard";
 
 const categories = [
   "All",
@@ -45,7 +46,7 @@ const Doctors = () => {
   // console.log(currentDoctors)
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-20 xl:px-24">
+    <div className="max-w-screen-2xl mx-auto px-8">
       <div className="flex flex-col sm:flex-row gap-5 mt-5">
         {/* Left side */}
         <div>
@@ -89,7 +90,12 @@ const Doctors = () => {
         {/* Right side */}
         <div className="flex-1 flex-col gap-2">
           {/* Search Input */}
-          <div className="w-full flex flex-col md:flex-row items-center justify-center gap-2 sm:mt-6 mb-4">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.5 }}
+            className="w-full flex gap-2 sm:mt-6 mb-4"
+          >
             <input
               type="text"
               placeholder="Search doctor..."
@@ -98,12 +104,12 @@ const Doctors = () => {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1); // Reset to the first page when searching
               }}
-              className="search-bar w-full max-w-4xl p-2 border rounded"
+              className="w-full max-w-6xl p-2 border rounded"
             />
             <button className="hidden md:block w-full md:w-auto py-2 px-8 bg-primary text-white rounded">
               <Search />
             </button>
-          </div>
+          </motion.div>
 
           {/* Display doctors */}
           <motion.div
@@ -112,35 +118,8 @@ const Doctors = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="w-full grid grid-cols-auto gap-4 gap-x-6"
           >
-            {currentDoctors.map((item, index) => (
-              <div
-                onClick={() => {
-                  navigate(`/appointment/${item._id}`);
-                  scrollTo(0, 0);
-                }}
-                key={index}
-                className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-500"
-              >
-                <img src={item.image} alt="" className="bg-blue-50" />
-                <div className="p-4">
-                  <div
-                    className={`flex items-center gap-2 text-sm text-center ${
-                      item.available ? "text-green-500" : "text-gray-500"
-                    }`}
-                  >
-                    <p
-                      className={`w-2 h-2 ${
-                        item.available ? "bg-green-500" : "bg-gray-500"
-                      } rounded-full`}
-                    ></p>
-                    <p>{item.available ? "Available" : "Not Available"}</p>
-                  </div>
-                  <p className="text-gray-900 text-lg font-medium">
-                    {item.name}
-                  </p>
-                  <p className="text-gray-600 text-sm">{item.specialty}</p>
-                </div>
-              </div>
+            {currentDoctors.map((doctor, index) => (
+              <DoctorCard doctor={doctor} />
             ))}
           </motion.div>
           {/* Pagination controller */}

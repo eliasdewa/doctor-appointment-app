@@ -5,6 +5,8 @@ import { assets } from "../assets/assets";
 import RelatedDoctors from "../components/RelatedDoctors";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { fadeIn } from "../variant";
+import { motion } from "framer-motion";
 const Appointment = () => {
   // Get doctor ID from URL parameters
   const { docId } = useParams();
@@ -138,17 +140,29 @@ const Appointment = () => {
     }
   };
   return (
-    <div className="max-w-screen-2xl mx-auto px-6 md:px-10 lg:px-20 xl:px-24">
+    <div className="max-w-screen-2xl mx-auto px-8">
       {/* Doctor details */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div>
+      <div className="flex flex-col sm:flex-row gap-4 mt-5">
+        {/* Image */}
+        <motion.div
+          variants={fadeIn("down", 0.2)}
+          initial="hidden"
+          whileInView={"show"}
+          viewport={{ once: false, amount: 0.7 }}
+        >
           <img
             className="bg-primary w-full sm:max-w-72 rounded-lg"
             src={docInfo?.image}
             alt=""
           />
-        </div>
-        <div className="flex-1 border border-gray-400 rounded-lg px-8 py-7 bg-white mx-2 sm:mx-0 mt-[80px] sm:mt-0">
+        </motion.div>
+        <motion.div
+          variants={fadeIn("left", 0.2)}
+          initial="hidden"
+          whileInView={"show"}
+          viewport={{ once: false, amount: 0.7 }}
+          className="flex-1 border border-gray-400 rounded-lg px-8 py-7 bg-white mx-2 sm:mx-0 mt-[80px] sm:mt-0"
+        >
           {/* Doc Info: name, degree, experience */}
           <p className="flex items-center gap-2 text-2xl font-medium text-gray-900">
             {docInfo?.name}
@@ -178,12 +192,19 @@ const Appointment = () => {
               {docInfo?.fees}
             </span>
           </p>
-        </div>
+        </motion.div>
       </div>
       {/* Booking slots */}
-      <div className="sm:ml-72 sm:pl-4 mt-4 font-medium text-gray-700">
-        <p>Booking slots</p>
+      <motion.div
+        variants={fadeIn("right", 0.2)}
+        initial="hidden"
+        whileInView={"show"}
+        viewport={{ once: false, amount: 0.7 }}
+        className="mt-4 font-medium text-gray-700"
+      >
+        <p className="text-xl font-medium">Booking slots</p>
         <div className="flex gap-2 items-center w-full overflow-x-scroll mt-4">
+          <p className="text-sm font-medium">Select Date:</p>
           {docSlots.length &&
             docSlots.map((item, index) => (
               <div
@@ -200,13 +221,14 @@ const Appointment = () => {
               </div>
             ))}
         </div>
-        <div className="flex items-center gap-3 w-full overflow-x-scroll mt-4">
+        <div className="flex items-center gap-2 w-full overflow-x-scroll mt-4">
+          <p className="text-sm font-medium">Select Time:</p>
           {docSlots.length &&
             docSlots[slotIndex].map((item, index) => (
               <p
                 key={index}
                 onClick={() => setSlotTime(item.time)}
-                className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${
+                className={`text-sm font-light flex-shrink-0 px-5 py-2 text-center min-w-12 rounded-full cursor-pointer ${
                   item.time === slotTime
                     ? "bg-primary text-white"
                     : "border border-gray-200"
@@ -222,7 +244,7 @@ const Appointment = () => {
         >
           Book an appointment
         </button>
-      </div>
+      </motion.div>
       {/* List related doctors */}
       <RelatedDoctors docId={docId} specialty={docInfo?.specialty} />
     </div>

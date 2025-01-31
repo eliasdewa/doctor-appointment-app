@@ -58,7 +58,7 @@ const Navbar = () => {
     navigate("/login");
   };
   return (
-    <header className="max-w-screen-2xl px-6 md:px-10 lg:px-20 xl:px-24 bg-container top-0 left-0 right-0 transition-all duration-300 ease-in-out">
+    <header className="max-w-screen-2xl mx-auto px-6 top-0 left-0 right-0 transition-all duration-300 ease-in-out">
       <div
         className={`flex items-center justify-between text-sm ${
           isSticky

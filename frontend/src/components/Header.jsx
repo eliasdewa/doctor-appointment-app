@@ -3,9 +3,11 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   const sliderImages = [
     {
       src: "https://static.vecteezy.com/system/resources/previews/027/298/490/non_2x/doctor-posing-portrait-free-photo.jpg",
@@ -48,13 +50,18 @@ const Header = () => {
             />
             <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-end text-white text-center p-5 bg-overlay">
               <h1 className="text-5xl font-bold mb-5">{image.caption}</h1>
-              <p className="text-2xl mb-7">
-                Book an appointment with ease and confidence.
+              <p className="text-xl text-white mb-8">
+                Book an appointment with the best doctors in town. Fast,
+                reliable, and hassle-free.
               </p>
               <button
-                className="text-white bg-[#007bff] hover:bg-blue-600 font-semibold rounded-md text-sm px-4 py-2.5"
+                onClick={() => {
+                  navigate("/doctors");
+                  scrollTo(0, 0);
+                }}
+                className="bg-blue-500 text-white px-8 py-3 rounded-full text-lg hover:bg-blue-600 transition duration-300"
               >
-                <Link to={"/doctors"}>Get Started</Link>
+                Get Started
               </button>
             </div>
           </div>
