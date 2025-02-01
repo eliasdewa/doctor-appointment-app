@@ -16,7 +16,7 @@ const ProfilePage = () => {
       const formData = new FormData();
       formData.append("name", userData.name);
       formData.append("phone", userData.phone);
-      formData.append("address", JSON.stringify(userData.address));
+      formData.append("address", userData.address);
       formData.append("gender", userData.gender);
       formData.append("dateOfBirth", userData.dateOfBirth);
 
@@ -171,23 +171,11 @@ const ProfilePage = () => {
                 <>
                   <input
                     type="text"
-                    value={userData.address.line1}
+                    value={userData.address}
                     onChange={(e) =>
                       setUserData((prev) => ({
                         ...prev,
-                        address: { ...prev.address, line1: e.target.value },
-                      }))
-                    }
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3"
-                  />
-             
-                  <input
-                    type="text"
-                    value={userData.address.line2}
-                    onChange={(e) =>
-                      setUserData((prev) => ({
-                        ...prev,
-                        address: { ...prev.address, line2: e.target.value },
+                        address: e.target.value
                       }))
                     }
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3"
@@ -195,9 +183,7 @@ const ProfilePage = () => {
                 </>
               ) : (
                 <p className="text-gray-600">
-                  {userData.address.line1}
-                  <br />
-                  {userData.address.line2}
+                  {userData.address}
                 </p>
               )}
             </div>

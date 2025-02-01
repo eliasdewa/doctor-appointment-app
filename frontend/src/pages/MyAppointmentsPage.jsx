@@ -3,26 +3,6 @@ import { AppContext } from "../context/AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const appointments = [
-  {
-    id: 1,
-    doctor: "Dr. John Doe",
-    specialty: "Cardiologist",
-    date: "2023-10-15",
-    time: "10:00 AM",
-    status: "Upcoming",
-  },
-  {
-    id: 2,
-    doctor: "Dr. Jane Smith",
-    specialty: "Dermatologist",
-    date: "2023-10-20",
-    time: "02:00 PM",
-    status: "Pending Payment",
-  },
-  // Add more appointments...
-];
-
 const MyAppointmentsPage = () => {
   const {
     backendUrl,

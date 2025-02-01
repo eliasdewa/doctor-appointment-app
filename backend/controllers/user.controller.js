@@ -11,9 +11,9 @@ import axios from 'axios';
 // Register a new user
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, phone } = req.body;
+    const { name, email, password } = req.body;
     // Check if required fields are provided
-    if (!name || !email || !password || !phone) {
+    if (!name || !email || !password) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required!" });
@@ -44,7 +44,6 @@ const registerUser = async (req, res) => {
     // create a new user
     const userData = {
       name,
-      phone,
       email,
       password: hashedPassword,
     };
@@ -130,7 +129,7 @@ const updateUserProfile = async (req, res) => {
     await userModel.findByIdAndUpdate(userId, {
       name,
       phone,
-      address: JSON.parse(address),
+      address,
       dateOfBirth,
       gender,
     });

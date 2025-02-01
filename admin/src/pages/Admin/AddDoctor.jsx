@@ -13,12 +13,12 @@ const AddDoctor = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [experience, setExperience] = useState("");
+  const [gender, setGender] = useState("");
   const [fees, setFees] = useState("");
   const [about, setAbout] = useState("");
   const [specialty, setSpecialty] = useState("");
   const [degree, setDegree] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
+  const [address, setAddress] = useState("");
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -34,14 +34,12 @@ const AddDoctor = () => {
       formData.append("email", email);
       formData.append("password", password);
       formData.append("experience", experience);
+      formData.append("gender", gender);
       formData.append("fees", Number(fees));
       formData.append("about", about);
       formData.append("specialty", specialty);
       formData.append("degree", degree);
-      formData.append(
-        "address",
-        JSON.stringify({ line1: address1, line2: address2 })
-      );
+      formData.append("address", address);
       // to console log formData;
       // formData.forEach((value, key) => {
       //   console.log(`${key} : ${value}`);
@@ -59,12 +57,12 @@ const AddDoctor = () => {
           setEmail("");
           setPassword("");
           setExperience("");
+          setGender("");
           setFees("");
           setAbout("");
           setSpecialty("");
           setDegree("");
-          setAddress1("");
-          setAddress2("");
+          setAddress("");
           setDocImg(false);
         })
         .catch((error) => {
@@ -158,6 +156,20 @@ const AddDoctor = () => {
                 <option value="10 years">10 years</option>
               </select>
             </div>
+            {/* Gender */}
+            <div className="flex-1 flex flex-col gap-1">
+              <p>Gender</p>
+              <select
+                onChange={(e) => setGender(e.target.value)}
+                value={gender}
+                className="border rounded px-3 py-2"
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
             {/* fees */}
             <div className="flex-1 flex flex-col gap-1">
               <p>Fees</p>
@@ -180,8 +192,6 @@ const AddDoctor = () => {
                 onChange={(e) => setSpecialty(e.target.value)}
                 value={specialty}
                 className="border rounded px-3 py-2"
-                name=""
-                id=""
               >
                 <option value="">Select Specialization</option>
                 <option value="General Physician">General Physician</option>
@@ -208,19 +218,11 @@ const AddDoctor = () => {
             <div className="flex-1 flex flex-col gap-1">
               <p>Address</p>
               <input
-                onChange={(e) => setAddress1(e.target.value)}
-                value={address1}
+                onChange={(e) => setAddress(e.target.value)}
+                value={address}
                 className="border rounded px-3 py-2"
                 type="text"
-                placeholder="address 1"
-                required
-              />
-              <input
-                onChange={(e) => setAddress2(e.target.value)}
-                value={address2}
-                className="border rounded px-3 py-2"
-                type="text"
-                placeholder="address 2"
+                placeholder="address"
                 required
               />
             </div>

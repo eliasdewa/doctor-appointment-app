@@ -17,6 +17,7 @@ const addDoctor = async (req, res) => {
       specialty,
       degree,
       experience,
+      gender,
       about,
       fees,
       address,
@@ -35,6 +36,7 @@ const addDoctor = async (req, res) => {
       !specialty ||
       !degree ||
       !experience ||
+      !gender ||
       !about ||
       !fees ||
       !address
@@ -81,9 +83,10 @@ const addDoctor = async (req, res) => {
       specialty,
       degree,
       experience,
+      gender,
       about,
       fees,
-      address: JSON.parse(address),
+      address,
       date: Date.now(),
       image: imageUrl,
     };
@@ -101,7 +104,7 @@ const addDoctor = async (req, res) => {
 };
 
 // Admin login
-const adminLogin = async (req, res, next) => {
+const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (
