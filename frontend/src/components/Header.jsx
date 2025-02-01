@@ -3,7 +3,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -32,9 +32,10 @@ const Header = () => {
     speed: 3000, // Transition speed
     slidesToShow: 1, // Show one slide at a time
     slidesToScroll: 1,
+    swipeToSlide: true,
     autoplay: true,
     autoplaySpeed: 2000,
-    //fade: true, // Smooth fading effect
+    fade: true, // Smooth fading effect
     adaptiveHeight: true,
   };
 
@@ -42,11 +43,11 @@ const Header = () => {
     <div className="relative overflow-hidden">
       <Slider {...settings}>
         {sliderImages.map((image, index) => (
-          <div key={index} className="relative w-full h-screen">
+          <div key={index} className="relative w-full">
             <img
               src={image.src}
               alt={image.alt}
-              className="relative w-full h-screen object-cover sm:object-fill"
+              className="relative w-full object-cover"
             />
             <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-end text-white text-center p-5 bg-overlay">
               <h1 className="text-5xl font-bold mb-5">{image.caption}</h1>

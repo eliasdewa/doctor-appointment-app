@@ -26,23 +26,23 @@ const About = () => {
             and affordable for everyone.
           </p>
           <div className="flex flex-col  md:flex-row my-10">
-            <div className="border p-4 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer">
-              <h3 className="text-xl font-bold text-primary">Our Mission</h3>
+            <div className="border p-4 flex flex-col gap-5 text-[15px] hover:bg-blue-50 transition-all duration-300 text-gray-600 cursor-pointer">
+              <h3 className="text-xl font-bold text-primary text-center">Our Mission</h3>
               <p>
                 We aim to provide exceptional healthcare services that are both
                 convenient and accessible for everyone.
               </p>
             </div>
-            <div className="border p-4 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer">
-              <h3 className="text-xl font-bold text-primary">Our Vision</h3>
+            <div className="border p-4 flex flex-col gap-5 text-[15px] hover:bg-blue-50 transition-all duration-300 text-gray-600 cursor-pointer">
+              <h3 className="text-xl font-bold text-primary text-center">Our Vision</h3>
               <p>
                 We believe that everyone deserves to live a healthy, fulfilling
                 life, and that healthcare should be accessible and affordable
                 for everyone.
               </p>
             </div>
-            <div className="border p-4 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-gray-600 cursor-pointer">
-              <h3 className="text-xl font-bold text-primary">Values</h3>
+            <div className="border p-4 flex flex-col gap-5 text-[15px] hover:bg-blue-50 transition-all duration-300 text-gray-600 cursor-pointer">
+              <h3 className="text-xl font-bold text-primary text-center">Values</h3>
               <p>
                 We strive to create a healthcare system that is accessible,
                 affordable, and equitable for everyone. We believe that everyone

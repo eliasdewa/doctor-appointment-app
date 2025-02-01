@@ -46,7 +46,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12">
+    <div className="max-w-4xl mx-auto px-6 py-12">
       <h1 className="text-3xl font-bold text-blue-900 mb-4">My Profile</h1>
       <div className="bg-white p-8 rounded-lg shadow-md mx-auto border">
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-10">
@@ -80,7 +80,7 @@ const ProfilePage = () => {
           {/* Basic Info */}
           <div className="flex-2">
             {/* Name Field */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3 px-4 py-2">
               <label className="text-gray-700 font-bold">Name</label>
               {isEditing ? (
                 <input
@@ -97,7 +97,7 @@ const ProfilePage = () => {
               )}
             </div>
             {/* Email Field */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3 px-4 py-2">
               <label className="text-gray-700 font-bold">
                 Email
               </label>
@@ -119,7 +119,7 @@ const ProfilePage = () => {
               )}
             </div>
             {/* Phone Field */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3 px-4 py-2">
               <label className="text-gray-700 font-bold">
                 Phone
               </label>
@@ -138,7 +138,7 @@ const ProfilePage = () => {
               )}
             </div>
             {/* Gender Field */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3 px-4 py-2">
               <label className="text-gray-700 font-bold">
                 Gender
               </label>
@@ -163,7 +163,7 @@ const ProfilePage = () => {
           {/* Address */}
           <div className="flex-1">
             {/* Address Field */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3 px-4 py-2">
               <label className="text-gray-700 font-bold">
                 Address
               </label>
@@ -202,7 +202,7 @@ const ProfilePage = () => {
               )}
             </div>
             {/* Date of Birth Field */}
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3 px-4 py-2">
               <label className="text-gray-700 font-bold">
                 Date of Birth
               </label>
